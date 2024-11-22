@@ -66,27 +66,32 @@ vector<string> spotvec = {
     "A11", "B11", "C11", "D11", "E11", "F11", "G11", "H11", "I11", "J11", "K11", "L11", "M11", "N11", "O11", "P11", "Q11", "R11", "S11", "T11", "U11", "V11", "W11", "X11", "Y11", "Z11",
     "A12", "B12", "C12", "D12", "E12", "F12", "G12", "H12", "I12", "J12", "K12", "L12", "M12", "N12", "O12", "P12", "Q12", "R12", "S12", "T12", "U12", "V12", "W12", "X12", "Y12", "Z12"
 };
-string numplace = "12345678";
+vector<string> numplace = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 string abcplace = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 mutex mtx;
 random_device dev;
 mt19937 rng(dev());
 uniform_int_distribution<mt19937::result_type> ran(0, spotvec.size() - 1);
-int ranspot;
-int numnum;
-int abcnum;
-int w,a,s,d;
+int ranspot = 46;
+int numnum = 9;
+int abcnum = 15;
+int w,a,s,d = 0;
+int score = 0;
+string currentspot;
+string lastspot;
+vector<string> tail;
+int length;
 void apple(){
     while (true){
         unique_lock<mutex> lock(mtx);
-        ranspot = ran(rng);
-        while (board[spots[spotvec[ranspot]]] == 'O' || board[spots[spotvec[ranspot]]] == 'T'){
+        if (board[spots[spotvec[ranspot]]] == '^' || board[spots[spotvec[ranspot]]] == 'V' || board[spots[spotvec[ranspot]]] == '<' || board[spots[spotvec[ranspot]]] == '>'){
+            score += 1;
             ranspot = ran(rng);
         }
         board[spots[spotvec[ranspot]]] = 'O';
         lock.unlock();
         cout << '\n' << board;
-        Sleep(500);
+        Sleep(300);
     }
 }
 void snake(){
@@ -127,24 +132,76 @@ void snake(){
             }
         }
         if (w == 1){
-            if (numnum <= 7){
+            if (numnum <= 12){
+                lastspot = abcplace[abcnum] + numplace[numnum];
+                length = tail.size();
+                tail.insert(tail.begin(),lastspot);
+                for(int i = 0; i <= length; i++){
+                        board[spots[tail[i]]] = 'X';
+                }
+                board[spots[tail.back()]] = ' ';
+                if (length == score){
+                    tail.pop_back();
+                }
+                numnum -= 1;
+                currentspot = abcplace[abcnum] + numplace[numnum];
+                board[spots[currentspot]] = '^';
                 
-                numnum += 1;
             }
         }else if (a == 1){
             if (abcnum >= 0){
+                lastspot = abcplace[abcnum] + numplace[numnum];
+                length = tail.size();
+                tail.insert(tail.begin(),lastspot);
+                for(int x = 0; x <= length; x++){
+                        board[spots[tail[x]]] = 'X';
+                }
+                board[spots[tail.back()]] = ' ';
+                if (length == score){
+                    tail.pop_back();
+                }
                 abcnum -= 1;
+                currentspot = abcplace[abcnum] + numplace[numnum];
+                board[spots[currentspot]] = '<';
+                
             }
         }else if (s == 1){
             if (numnum >= 0){
+                lastspot = abcplace[abcnum] + numplace[numnum];
+                length = tail.size();
+                tail.insert(tail.begin(),lastspot);
+                for(int i = 0; i <= length; i++){
+                        board[spots[tail[i]]] = 'X';
+                }
+                board[spots[tail.back()]] = ' ';
+                if (length == score){
+                    tail.pop_back();
+                }
                 numnum += 1;
+                currentspot = abcplace[abcnum] + numplace[numnum];
+                board[spots[currentspot]] = 'V';
+                
             }
         }else if (d == 1){
-            if (abcnum <= 25){
+            if (abcnum <= 26){
+                lastspot = abcplace[abcnum] + numplace[numnum];
+                length = tail.size();
+                tail.insert(tail.begin(),lastspot);
+                for(int i = 0; i <= length; i++){
+                        board[spots[tail[i]]] = 'X';
+                }
+                board[spots[tail.back()]] = ' ';
+                if (length == score){
+                    tail.pop_back();
+                }
                 abcnum += 1;
+                currentspot = abcplace[abcnum] + numplace[numnum];
+                board[spots[currentspot]] = '>';
+                
             }
         }
         lock.unlock();
+        Sleep(300);
     }
 }
 int main(){
