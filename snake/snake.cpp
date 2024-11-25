@@ -81,6 +81,9 @@ string currentspot;
 string lastspot;
 vector<string> tail;
 int length;
+void coli(){
+
+}
 void apple(){
     while (true){
         unique_lock<mutex> lock(mtx);
@@ -99,6 +102,12 @@ void snake(){
     abcnum = 0;
     while (true){
         unique_lock<mutex> lock(mtx);
+        int cnt = count(tail.begin(), tail.end(), currentspot);
+        if (board[0] == 'V' || board[0] == '^' || board[0] == '<' || board[0] == '>' || cnt > 0){
+            while(true){
+                cout << "YOU LOSE!!!!!!!!!!!!!!!";
+            }
+        }
         if (GetAsyncKeyState('W') & 0x8000){
             if (w != 2){
                 w = 1;
@@ -132,7 +141,7 @@ void snake(){
             }
         }
         if (w == 1){
-            if (numnum <= 12){
+            if (numnum < 12){
                 lastspot = abcplace[abcnum] + numplace[numnum];
                 length = tail.size();
                 tail.insert(tail.begin(),lastspot);
@@ -183,7 +192,7 @@ void snake(){
                 
             }
         }else if (d == 1){
-            if (abcnum <= 26){
+            if (abcnum < 26){
                 lastspot = abcplace[abcnum] + numplace[numnum];
                 length = tail.size();
                 tail.insert(tail.begin(),lastspot);
