@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/ddela092/Documents/GitHub/C-plus-require/cross the road",
-      "program": "c:/Users/ddela092/Documents/GitHub/C-plus-require/cross the road/build/Debug/outDebug",
+      "cwd": "c:/Users/ddela092/Documents/GitHub/C-plus-require/mad lib",
+      "program": "c:/Users/ddela092/Documents/GitHub/C-plus-require/mad lib/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

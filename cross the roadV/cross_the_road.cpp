@@ -11,11 +11,11 @@
 using namespace std;
 
 string row1 = "|               |";
-string row2 = "|////// /////// |"; 
+string row2 = "}////// /////// |"; 
 string row3 = "|               |";
-string row4 = "| ////////  ////|";
+string row4 = "[ ////////  ////|";
 string row5 = "|               |";
-string row6 = "|//// ////   ///|"; 
+string row6 = "]//// ////   ///|"; 
 string row7 = "|               |";
 string row8 = "|               |";
 string row9 = "|               |";
@@ -58,6 +58,15 @@ string rowsave;
 void scroll(){
     while (true){
         rowsave = row9;
+        if (rowsave[0] == '}'){
+            rowsave = "}////// /////// |";
+        }else if(rowsave[0] == '['){
+            rowsave = "[ ////////  ////|";
+        }else if(rowsave[0] == ']'){
+            rowsave = "]//// ////   ///|";
+        }else if (rowsave[0] == '|'){
+            rowsave = "|               |";
+        }
         row9 = row8;
         row8 = row7;
         row7 = row6;
@@ -68,7 +77,13 @@ void scroll(){
         row2 = row1;
         row1 = rowsave;
         board = row1 + '\n' + row2 + '\n' + row3 + '\n' + row4 + '\n' + row5 + '\n' + row6 + '\n' + row7 + '\n' + row8 + '\n' + row9;
-        Sleep(1000);
+        
+        Sleep(2000);
+        if (row8[movenum] == '/'){
+            while(true){
+                cout << "you lose!!!!!!";
+            }
+        }
     }
 }
 
