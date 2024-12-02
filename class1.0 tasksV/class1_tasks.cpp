@@ -26,18 +26,21 @@ void task1() {
     // Hello! My name is Juan
     // Hello! My name is Sara
     // Hello! My name is Carlos
-    string name1, name2, name3;
-    cin >> name1;
-    cin >> name2;
-    cin >> name3;
-    vector<string> names;
-    names.push_back(name1);
-    names.push_back(name2);
-    names.push_back(name3);
-    cout << "Hello my name is " << name1 << endl;
-    cout << "Hello my name is " << name2 << endl;
-    cout << "Hello my name is " << name3 << endl;
+    Person people[3];
+
+    cout << "Enter the names of three people:\n";
+
+    for (int i = 0; i < 3; i++) {
+        cout << "Name " << i + 1 << ": ";
+        cin >> people[i].Name;
+    }
+
+    cout << "\nOutput:\n";
+    for (int i = 0; i < 3; i++) {
+        cout << people[i].ToString() << endl;
+    }
 }
+
 
 class PersonWithConstructor {
 public:
@@ -73,7 +76,27 @@ void task2() {
     // Hello! My name is Juan
     // Hello! My name is Sara
     // Hello! My name is Carlos
+
+    PersonWithConstructor* people[3];
+
+
+    cout << "Enter the names of three people:\n";
+
+    for (int i = 0; i < 3; i++) {
+        string name;
+        cout << "Name " << i + 1 << ": ";
+        cin >> name;
+
+        
+        people[i] = new PersonWithConstructor(name);
+    }
+
+    cout << "\nOutput:\n";
+    for (int i = 0; i < 3; i++) {
+        cout << people[i]->ToString() << endl;
+    }
 }
+
 
 int Addition(int number) {
     // Create a C++ method/function that takes a user-entered number as an argument,
@@ -82,12 +105,16 @@ int Addition(int number) {
     // Addition(0) ➞ 1
     // Addition(9) ➞ 10
     // Addition(-3) ➞ -2
+    number += 1;
+    cout << number;
 }
 
 int main() {
-    Person person;
-    person.Name = "Dawson";
-    cout << person.ToString();
     task1();
+    task2();
+    int num;
+    cout << "Enter a number: ";
+    cin >> num;
+    Addition(num);
     return 0;
 }
